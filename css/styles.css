@@ -1,9 +1,28 @@
 .body {
-    margin: auto;
+    margin: 10%;
 }
 
 .jeu {
-    background-color: black;
+    background-color: rgb(244, 203, 203);
     margin-top: 5%;
 
+}
+
+#skier.resize {
+    width: 6em;
+    height: auto;
+}
+
+.move_buttons {
+    width: fit-content;
+}
+
+.move_buttons img {
+    height: 4em;
+    width: 4em;
+    transition: transform .1s;
+}
+
+.move_buttons img:hover {
+    transform: scale(1.1);
 }
