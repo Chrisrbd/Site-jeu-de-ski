@@ -25,9 +25,11 @@ window.addEventListener("keydown", function(event) {
 }, true);
 
 window.addEventListener("keyup", function(event) {
-    if (event.key == "ArrowRight" || event.key == "ArrowLeft"){
-        skier.src = "../images/skier.png";
-    }
+    this.setTimeout(function(){
+        if (event.key == "ArrowRight" || event.key == "ArrowLeft"){
+            skier.src = "../images/skier.png";
+        }
+    }, 300)
 }, true);
 
 function move_right(){

@@ -2,6 +2,11 @@
     margin: 10%;
 }
 
+main {
+    width: 80%;
+    margin: auto;
+}
+
 .jeu {
     background-color: rgb(244, 203, 203);
     margin-top: 5%;
