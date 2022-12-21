@@ -14,6 +14,17 @@ main {
 
 #game_grid {
     width: 100%;
+    border-width: 2px;
+}
+
+#game_grid tr td:first-child {
+    border-right-style: dotted;
+    border-color: rgb(205, 205, 205);
+}
+
+#game_grid tr td:last-child {
+    border-left-style: dotted;
+    border-color: rgb(205, 205, 205);
 }
 
 #game_grid td {
