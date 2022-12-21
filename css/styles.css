@@ -8,18 +8,37 @@ main {
 }
 
 .jeu {
-    background-color: rgb(244, 203, 203);
+    background-color: rgb(251, 227, 227);
     margin-top: 5%;
-
 }
 
-#skier.resize {
-    width: 6em;
+#game_grid {
+    width: 100%;
+}
+
+#game_grid td {
+    text-align: center;
+}
+
+.obstacle_img {
+    max-width: auto;
+    height: 5em;
+}
+
+#skier {
+    max-width: 4em;
     height: auto;
 }
 
 .move_buttons {
-    width: fit-content;
+    display: none;
+}
+
+@media screen and (min-width = 1200px){
+    .move_buttons {
+        display: inline;
+        width: fit-content;
+    }
 }
 
 .move_buttons img {

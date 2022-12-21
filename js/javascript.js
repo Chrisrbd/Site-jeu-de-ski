@@ -1,8 +1,16 @@
-let input = document.getElementById("input_name");
-let skier = document.getElementById("skier");
+var input = document.getElementById("input_name");
+var gamegrid = document.getElementById("game_grid");
 
-let pressed_key = "";
-let timeout = null;
+var pressed_key = "";
+var timeout = null;
+
+const GRID_LENGTH = 10;
+const GRID_WIDTH = 11;
+
+var skier_pos = Math.floor(GRID_WIDTH / 2);
+
+generate_grid();
+var skier = generate_skier_character();
 
 window.addEventListener("keydown", function(event) {
     let str;
@@ -45,9 +53,50 @@ window.addEventListener("keyup", function(event) {
 }, true);
 
 function move_right(){
-    skier.src = "../images/skier_right.png";
+    if (skier_pos + 1 < GRID_WIDTH - 1){
+        skier.src = "../images/skier_right.png";
+        move_skier_character(skier_pos + 1);
+        skier_pos++;
+    }
 }
 
 function move_left(){
-    skier.src = "../images/skier_left.png";
+    if (skier_pos - 1 > 0){
+        skier.src = "../images/skier_left.png";
+        move_skier_character(skier_pos - 1);
+        skier_pos--;
+    }
+}
+
+function move_skier_character(position){
+    let row = gamegrid.querySelector("tr").children;
+    row[position].appendChild(skier);
+}
+
+function generate_grid(){
+    for (let i = 0; i < GRID_LENGTH; i++){
+        let row = document.createElement("tr");
+        for (let i = 0; i < GRID_WIDTH; i++){
+            let cell = document.createElement("td");
+            cell.style.width = (100 / GRID_WIDTH).toFixed(3).toString() + "%";
+            row.appendChild(cell);
+        }
+        let left_decoration_obstacle = document.createElement("img");
+        let right_decoration_obstacle = document.createElement("img");
+        left_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10%x8%).png";
+        right_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10%x8%).png";
+        left_decoration_obstacle.className = "obstacle_img";
+        right_decoration_obstacle.className = "obstacle_img";
+        row.firstChild.appendChild(left_decoration_obstacle);
+        row.lastChild.appendChild(right_decoration_obstacle);
+        gamegrid.appendChild(row);
+    }
+}
+
+function generate_skier_character(){
+    let skier_img = document.createElement("img");
+    skier_img.src = "../images/skier.png";
+    skier_img.id = "skier";
+    gamegrid.querySelector("tr").children[skier_pos].appendChild(skier_img);
+    return skier_img;
 }

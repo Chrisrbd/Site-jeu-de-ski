@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
         <title>Jeu de ski</title>
         <link href="../css/styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <header>
-            <h1>Bienvenue sur notre jeu de ski !</h1>
+            <h1>Sommet</h1>
         </header>
         <main>
             <h2 id="input_name"></h2>
             <section class="jeu">
-                <img id = "skier" src="../images/skier.png">
+                <table id="game_grid">
+                </table>
                 <div class="move_buttons">
                     <img src="../images/left_arrow.png" onclick="move_left()">
                     <img src="../images/right_arrow.png" onclick="move_right()">
