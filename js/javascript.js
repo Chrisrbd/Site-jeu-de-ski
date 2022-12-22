@@ -3,13 +3,19 @@ var gamegrid = document.getElementById("game_grid");
 var pressed_key = "";
 var timeout = null;
 
-const GRID_LENGTH = 10;
+const OBSTACLE_GENERATION_PROBABILITY = 50; //chance of obstacle spawn in percent
+const OBSTACLE_GENERATION_DENSITY = 25; //maximum percentage of obstacles per row
+
+const OBSTACLES_IMG_HEIGHT = 94;
 const GRID_WIDTH = 11;
+const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT);
 
 var skier_pos = Math.floor(GRID_WIDTH / 2);
 
 generate_grid();
 var skier = generate_skier_character();
+
+// generate_obstacle_row(gamegrid.lastChild);
 
 window.addEventListener("keydown", function(event) {
     let str;
@@ -69,6 +75,34 @@ function move_left(){
 function move_skier_character(position){
     let row = gamegrid.querySelector("tr").children;
     row[position].appendChild(skier);
+}
+
+function generate_obstacle_row(row){
+    let max_obstacle_number = Math.round(Math.random() * (OBSTACLE_GENERATION_DENSITY / 100 * GRID_WIDTH)); //OBSTACLE NUMBER PER ROW
+    let obstacle_positions = [];
+    for (let i = 0; i < max_obstacle_number; i++){
+        let pos = Math.floor(Math.random() * (max + 1));
+        obstacle_positions.push(pos);
+        console.log(pos);
+    }
+
+    //CHOOSE FROM WHICH SIDE (LEFT OR RIGHT) THE ALGORITHM START TO PLACE THE OBSTACLES
+    // if (Math.random() < 0.5){
+    //     for (let i = 0; i < obstacle_number; i++){
+    //         for (let j = 0; j < GRID_WIDTH; j++){
+    //             if (obstacle_number < max_obstacle_number){
+    //                 if (Math.random() < OBSTACLE_GENERATION_PROBABILITY / 100){
+
+    //                 }
+    //             } else {
+
+    //             }
+    //         }
+    //     }
+    // }
+    // else {
+        
+    // }
 }
 
 function generate_grid(){
