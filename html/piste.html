@@ -5,21 +5,21 @@
         <title>Jeu de ski</title>
         <link href="../css/styles.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
-        <header>
-            <h1>Sommet</h1>
-        </header>
-        <main>
-            <h2 id="input_name"></h2>
-            <section class="jeu">
-                <table id="game_grid">
-                </table>
-                <div class="move_buttons">
-                    <img src="../images/left_arrow.png" onclick="move_left()">
-                    <img src="../images/right_arrow.png" onclick="move_right()">
-                </div>
-            </section>
-        </main>
+    <body class="wrapper">
+        <div class="side_panel">
+            Texte à gauche
+        </div>
+        <section class="jeu">
+            <table id="game_grid">
+            </table>
+            <div class="move_buttons">
+                <img src="../images/left_arrow.png" onclick="move_left()">
+                <img src="../images/right_arrow.png" onclick="move_right()">
+            </div>
+        </section>
+        <div class="side_panel">
+            Texte à droite
+        </div>
     </body>
     <script src="../js/javascript.js" async></script>
 </html>

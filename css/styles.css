@@ -1,5 +1,10 @@
-.body {
-    margin: 10%;
+body {
+    margin: 0%;
+}
+
+.wrapper {
+    display: flex;
+    background-image: url("../images/wood_texture.jpg");
 }
 
 main {
@@ -7,9 +12,14 @@ main {
     margin: auto;
 }
 
+.side_panel {
+    text-align: center;
+    flex: 1;
+}
+
 .jeu {
-    background-color: rgb(251, 227, 227);
-    margin-top: 5%;
+    background-image: url("../images/snow_texture.jpg");
+    flex: 7;
 }
 
 #game_grid {

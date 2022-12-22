@@ -1,4 +1,3 @@
-var input = document.getElementById("input_name");
 var gamegrid = document.getElementById("game_grid");
 
 var pressed_key = "";
@@ -40,7 +39,6 @@ window.addEventListener("keydown", function(event) {
         default:
             str = event.key;
     }
-    input.textContent = str
 }, true);
 
 window.addEventListener("keyup", function(event) {
@@ -49,7 +47,7 @@ window.addEventListener("keyup", function(event) {
         if ((event.key == "ArrowRight" || event.key == "ArrowLeft") && pressed_key == ""){
             skier.src = "../images/skier.png";
         }
-    }, 300)
+    }, 200)
 }, true);
 
 function move_right(){
