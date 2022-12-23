@@ -6,15 +6,40 @@
         <link href="../css/styles.css" rel="stylesheet" type="text/css">
     </head>
     <body class="wrapper">
-        <header>
-            <h1>Bienvenue sur notre jeu de ski !</h1>
-        </header>
-        <main>
-            <ul>
-                <li>
-                    <button onclick="location.href = 'piste.html'">Jouer</button>
-                </li>
-            </ul>
-        </main>
+        <div class="menu">
+            <header>
+                <h1>Bienvenue sur notre jeu de ski !</h1>
+            </header>
+            <main>
+                <div id="main-menu">
+                    <ul>
+                        <li>
+                            <button id="play-button">Jouer</button>
+                        </li>
+                        <!-- button skin skieur-->
+                        <li>
+                            <button onclick="location.href = 'about.html'">Credit</button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="difficulty">
+                    <ul>
+                        <li>
+                            <button onclick="location.href = 'piste.html'">Piste bleu 🌀🟦</button>
+                        </li>
+                        <li>
+                            <button onclick="location.href = 'piste.html'">Piste rouge ❗🚩</button>
+                        </li>
+                        <li>
+                            <button onclick="location.href = 'piste.html'">Piste noire  ☠️🏴</button>
+                        </li>
+                    </ul>
+                </div>
+
+            </main>
+        </div>
+
+
     </body>
+    <script src="../js/javascript.js" async></script>
 </html>
