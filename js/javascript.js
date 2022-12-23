@@ -1,3 +1,21 @@
+// menu
+let play_button = document.getElementById("play-button");
+let difficulty_div = document.getElementById("difficulty");
+let main_div = document.getElementById("main-menu");
+
+function difficulty(){
+    if(getComputedStyle(difficulty_div).display != "none"){
+        difficulty_div.style.display = "none";
+        main_div.style.display = "block";
+    } else {
+        difficulty_div.style.display = "block";
+        main_div.style.display = "none";
+    }
+};
+play_button.onclick = difficulty;
+
+
+// jeu
 var gamegrid = document.getElementById("game_grid");
 
 let pressed_key = "";
@@ -117,7 +135,7 @@ function generate_grid(){
     }
 }
 
-function generate_skier_character(){
+function generate_skier_character(){ 
     let skier_img = document.createElement("img");
     skier_img.src = "../images/skier.png";
     skier_img.id = "skier";
