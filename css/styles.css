@@ -1,3 +1,8 @@
+html {
+    overflow-y: hidden;
+}
+
+
 body {
     margin: 0;
     overflow: scroll; /*changer en hidden en utilisation normale*/
