@@ -1,7 +1,7 @@
 var gamegrid = document.getElementById("game_grid");
 
-var pressed_key = "";
-var timeout = null;
+let pressed_key = "";
+let timeout = null;
 
 const OBSTACLE_GENERATION_PROBABILITY = 50; //chance of obstacle spawn in percent
 const OBSTACLE_GENERATION_DENSITY = 25; //maximum percentage of obstacles per row
@@ -10,12 +10,12 @@ const OBSTACLES_IMG_HEIGHT = 94;
 const GRID_WIDTH = 11;
 const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT);
 
-var skier_pos = Math.floor(GRID_WIDTH / 2);
+let skier_pos = Math.floor(GRID_WIDTH / 2);
 
 generate_grid();
 var skier = generate_skier_character();
 
-// generate_obstacle_row(gamegrid.lastChild);
+generate_obstacle_row(gamegrid.lastChild);
 
 window.addEventListener("keydown", function(event) {
     let str;
@@ -50,7 +50,7 @@ window.addEventListener("keydown", function(event) {
 window.addEventListener("keyup", function(event) {
     pressed_key = "";
     timeout = this.setTimeout(function(){
-        if ((event.key == "ArrowRight" || event.key == "ArrowLeft") && pressed_key == ""){
+        if ((event.key === "ArrowRight" || event.key === "ArrowLeft") && pressed_key === ""){
             skier.src = "../images/skier.png";
         }
     }, 200)
@@ -115,8 +115,8 @@ function generate_grid(){
         }
         let left_decoration_obstacle = document.createElement("img");
         let right_decoration_obstacle = document.createElement("img");
-        left_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10%x8%).png";
-        right_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10%x8%).png";
+        left_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10x8).png";
+        right_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10x8).png";
         left_decoration_obstacle.className = "obstacle_img";
         right_decoration_obstacle.className = "obstacle_img";
         row.firstChild.appendChild(left_decoration_obstacle);

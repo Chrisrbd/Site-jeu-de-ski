@@ -1,5 +1,5 @@
 body {
-    margin: 0%;
+    margin: 0;
     overflow: scroll; /*changer en hidden en utilisation normale*/
 }
 
@@ -44,7 +44,7 @@ main {
 }
 
 .obstacle_img {
-    max-width: auto;
+    width: auto;
     height: 5em;
 }
 
@@ -75,7 +75,7 @@ button:active {
     display: none;
 }
 
-@media screen and (min-width = 1200px){
+@media screen and (max-width: 1200px){
     .move_buttons {
         display: inline;
         width: fit-content;
