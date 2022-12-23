@@ -4,11 +4,11 @@ let pressed_key = "";
 let timeout = null;
 
 const OBSTACLE_GENERATION_PROBABILITY = 50; //chance of obstacle spawn in percent
-const OBSTACLE_GENERATION_DENSITY = 25; //maximum percentage of obstacles per row
+const OBSTACLE_GENERATION_DENSITY = 50; //maximum percentage of obstacles per row
 
 const OBSTACLES_IMG_HEIGHT = 94;
 const GRID_WIDTH = 11;
-const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT);
+const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT) + 1; //fill the screen height with rows + 1 outside the screen
 
 let skier_pos = Math.floor(GRID_WIDTH / 2);
 
@@ -78,31 +78,23 @@ function move_skier_character(position){
 }
 
 function generate_obstacle_row(row){
-    let max_obstacle_number = Math.round(Math.random() * (OBSTACLE_GENERATION_DENSITY / 100 * GRID_WIDTH)); //OBSTACLE NUMBER PER ROW
+    let max_obstacle_number = Math.round(Math.random() * (OBSTACLE_GENERATION_DENSITY / 100 * GRID_WIDTH)); //number of obstacle per row
     let obstacle_positions = [];
+    //generate a random position for each obstacle
     for (let i = 0; i < max_obstacle_number; i++){
-        let pos = Math.floor(Math.random() * (max + 1));
+        let pos;
+        do {
+            pos = Math.floor(Math.random() * (GRID_WIDTH - 2)) + 1 //random number between 1 and GRID_WIDTH - 2
+        } while (obstacle_positions.includes(pos));
         obstacle_positions.push(pos);
-        console.log(pos);
     }
-
-    //CHOOSE FROM WHICH SIDE (LEFT OR RIGHT) THE ALGORITHM START TO PLACE THE OBSTACLES
-    // if (Math.random() < 0.5){
-    //     for (let i = 0; i < obstacle_number; i++){
-    //         for (let j = 0; j < GRID_WIDTH; j++){
-    //             if (obstacle_number < max_obstacle_number){
-    //                 if (Math.random() < OBSTACLE_GENERATION_PROBABILITY / 100){
-
-    //                 }
-    //             } else {
-
-    //             }
-    //         }
-    //     }
-    // }
-    // else {
-        
-    // }
+    //place an obstacle to the computed positions
+    for (const pos of obstacle_positions) {
+        let obstacle = document.createElement("img");
+        obstacle.src = "../images/clashofclans_sapin_2018_resized(10x8).png";
+        obstacle.className = "obstacle_img";
+        row.children[pos].appendChild(obstacle);
+    }
 }
 
 function generate_grid(){
