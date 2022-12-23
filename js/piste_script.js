@@ -1,11 +1,15 @@
 const gamegrid = document.getElementById("game_grid");
+const time_text = document.getElementById("time_text")
 
 let pressed_key = "";
-let skier_timeout = null;
-let game_timeout = null;
+let skier_timeoutID = null;
+let game_timeoutID = null;
+let time_intervalID;
 
-let obstacle_movement_speed = 2;
-const OBSTACLE_GENERATION_DENSITY = 30; //maximum percentage of obstacles per row
+let obstacle_movement_speed;
+let time = 0;
+let score = 0;
+let OBSTACLE_GENERATION_DENSITY; //maximum percentage of obstacles per row
 
 const OBSTACLES_IMG_HEIGHT = 94;
 const GRID_WIDTH = 11;
@@ -13,13 +17,63 @@ const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT) + 1; //
 
 let skier_pos = Math.floor(GRID_WIDTH / 2);
 
+get_params();
+//Game start
 generate_grid();
 let skier = generate_skier_character();
 move_obstacles();
+time_intervalID = start_time_counter();
+
+function get_params(){
+    const params = new URLSearchParams(window.location.search);
+    switch (params.get('difficulty')){
+        case "easy":
+            obstacle_movement_speed = 1;
+            OBSTACLE_GENERATION_DENSITY = 20;
+            break;
+        case "normal":
+            obstacle_movement_speed = 2;
+            OBSTACLE_GENERATION_DENSITY = 30;
+            break;
+        case "hard":
+            obstacle_movement_speed = 4;
+            OBSTACLE_GENERATION_DENSITY = 35;
+            break;
+        default:
+            obstacle_movement_speed = 2;
+            OBSTACLE_GENERATION_DENSITY = 30;
+    }
+}
+
+function back_to_menu(){
+    window.clearTimeout(game_timeoutID);
+    pause_time_counter(time_intervalID);
+    if (confirm("Voulez-vous vraiment revenir au menu ?")){
+        window.location.replace("menu.html");
+    }
+    else {
+        move_obstacles();
+        time_intervalID = start_time_counter();
+    }
+}
+
+function start_time_counter(){
+    return window.setInterval(function(){
+        time++;
+        time_text.textContent = time.toString();
+    }, 1000);
+}
+
+function pause_time_counter(intervalID){
+    window.clearTimeout(intervalID);
+}
+
+function calc_score(){}
 
 function defeat(){
     console.log("YOU LOST");
-    window.clearTimeout(game_timeout);
+    window.clearTimeout(game_timeoutID);
+    pause_time_counter(time_intervalID);
     window.removeEventListener("keydown", handle_keydown, true);
     window.removeEventListener("keyup", handle_keyup, true);
 }
@@ -32,8 +86,8 @@ window.addEventListener("keyup", handle_keyup, true);
 function handle_keydown(event) {
     let str;
     switch (event.key) {
-        case "ArrowDown":
-            str = "Flèche bas";
+        case "Escape":
+            back_to_menu();
             break;
         case "ArrowUp":
             str = "Flèche haut";
@@ -41,16 +95,16 @@ function handle_keydown(event) {
         case "ArrowLeft":
             str = "Flèche gauche";
             pressed_key = "ArrowLeft";
-            if (skier_timeout !== null) {
-                this.clearTimeout(skier_timeout);
+            if (skier_timeoutID !== null) {
+                this.clearTimeout(skier_timeoutID);
             }
             move_left();
             break;
         case "ArrowRight":
             str = "Flèche droite";
             pressed_key = "ArrowRight";
-            if (skier_timeout !== null) {
-                this.clearTimeout(skier_timeout);
+            if (skier_timeoutID !== null) {
+                this.clearTimeout(skier_timeoutID);
             }
             move_right();
             break;
@@ -61,7 +115,7 @@ function handle_keydown(event) {
 
 function handle_keyup(event){
     pressed_key = "";
-    skier_timeout = this.setTimeout(function(){
+    skier_timeoutID = this.setTimeout(function(){
         if ((event.key === "ArrowRight" || event.key === "ArrowLeft") && pressed_key === ""){
             skier.src = "../images/skier.png";
         }
@@ -89,7 +143,6 @@ function move_left(){
 function move_skier_character(position){
     let row = gamegrid.querySelector("tr").children;
     if (row[position].children.length > 0){
-        console.log(row[position].firstChild);
         row[position].firstChild.style.backgroundSize = "contain" ;
         row[position].firstChild.style.backgroundRepeat = "no-repeat";
         if (position > skier_pos){
@@ -119,7 +172,7 @@ function move_obstacles(){
     //re-place the skier on the first row
     skier = generate_skier_character();
     if (check_collision() !== 1){
-        game_timeout = this.setTimeout(function(){move_obstacles()}, 1000 / obstacle_movement_speed);
+        game_timeoutID = this.setTimeout(function(){move_obstacles()}, 1000 / obstacle_movement_speed);
     }
 }
 

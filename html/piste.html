@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Jeu de ski</title>
         <link href="../css/styles.css" rel="stylesheet" type="text/css">
     </head>
     <body class="wrapper">
         <div class="side_panel">
-            Texte à gauche
+            <div>
+                <img class="icon icon-button" id= "home_btn" src="../images/home.png" onclick="back_to_menu()" alt="RETOUR">
+            </div>
         </div>
         <section class="jeu">
             <table id="game_grid">
             </table>
             <div class="move_buttons">
-                <img src="../images/left_arrow.png" onclick="move_left()">
-                <img src="../images/right_arrow.png" onclick="move_right()">
+                <img src="../images/left_arrow.png" onclick="move_left()" alt="⇦">
+                <img src="../images/right_arrow.png" onclick="move_right()" alt="⇨">
             </div>
         </section>
         <div class="side_panel">
-            Texte à droite
+            <div id="time_div">
+                <img class="icon" src="../images/clock.png" alt="⏱">
+                <h1 id="time_text">0</h1>
+            </div>
         </div>
+        <script src="../js/piste_script.js" async></script>
     </body>
-    <script src="../js/piste_script.js" async></script>
 </html>

@@ -1,11 +1,14 @@
 body {
     margin: 0;
-    overflow: scroll; /*changer en hidden en utilisation normale*/
+    overflow: hidden; /*changer en hidden en utilisation normale*/
 }
 
 .wrapper {
     display: flex;
-    background-image: url("../images/wood_texture.jpg");
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/background.webp");
+    background-size: cover;
 }
 
 main {
@@ -18,10 +21,29 @@ main {
     flex: 1;
 }
 
+#time_div {
+    display: inline-flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#time_div img {
+    width: 3em;
+}
+
+#time_text {
+    padding-left: 5px;
+    text-align: left;
+    color: white;
+}
+
 .jeu {
-    padding-top: 0.5%;
+    padding-top: 1%;
     background-image: url("../images/snow_texture.jpg");
-    flex: 6;
+    flex: 5;
 }
 
 #game_grid {
@@ -53,6 +75,15 @@ main {
     height: auto;
 }
 
+.icon {
+    width: 3em;
+}
+
+.icon-button {
+    margin-top: 10%;
+    transition: transform .2s;
+}
+
 button {
     border-radius: 1em;
     border: none;
@@ -61,8 +92,12 @@ button {
     transition: transform .2s;
 }
 
-button:hover{
+button:hover, .icon-button:hover {
     transform: scale(1.1);
+}
+
+.icon-button:active {
+    transform: scale(0.9);
 }
 
 button:active {
@@ -92,7 +127,38 @@ button:active {
     transform: scale(1.1);
 }
 
-/*Pour menu.html*/
+/*
+=========================================================================================================
+menu.html style
+*/
+.menu {
+    color: white;
+    flex: 1;
+    width: 20%;
+    height: max-content;
+    vertical-align: center;
+    text-align: center;
+}
+
+.menu button {
+    width: fit-content;
+    padding: 1em 3em;
+    background-image: url("../images/button_background.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: white;
+    font-size: 1.2em;
+}
+
+#main_title {
+    margin-bottom: 2em;
+    font-size: xxx-large;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -102,19 +168,20 @@ li {
     margin-bottom: 1em;
 }
 
-#difficulty {
+#difficulty-menu {
     display: none;
 }
 
-.menu {
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-
-    background-color: aqua;
+/*
+#blue_track_btn {
+    background-color: #4545ff;
 }
 
+#red_track_btn {
+    background-color: #de3535;
+}
 
-
+#black_track_btn {
+    background-color: #2a2a2a;
+}
+*/
