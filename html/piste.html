@@ -9,13 +9,18 @@
     <body class="wrapper">
         <div class="side_panel">
             <div>
-                <img class="icon icon-button" id= "home_btn" src="../images/home.png" onclick="back_to_menu()" alt="RETOUR">
+                <img class="icon icon-button" id= "home_btn" src="../images/home.png" onclick="back_to_menu()" alt="RETOUR" title="Menu">
+            </div>
+            <div id="score_div">
+                <h1 id="score_text">0</h1>
+                <table id="score_table">
+                </table>
             </div>
         </div>
         <section class="jeu">
             <table id="game_grid">
             </table>
-            <div class="move_buttons">
+            <div class="move-buttons">
                 <img src="../images/left_arrow.png" onclick="move_left()" alt="⇦">
                 <img src="../images/right_arrow.png" onclick="move_right()" alt="⇨">
             </div>

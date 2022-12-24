@@ -1,7 +1,13 @@
-html {
-    overflow-y: hidden;
+@font-face {
+    font-family: "P22 Yule W00 Heavy Snow Regular";
+    src: url("../fonts/P22 Yule W00 Heavy Snow Regular.ttf");
 }
 
+html {
+    overflow-y: hidden;
+    font-family: P22 Yule W00 Heavy Snow Regular, fantasy;
+    color: white;
+}
 
 body {
     margin: 0;
@@ -26,6 +32,18 @@ main {
     flex: 1;
 }
 
+#score_div {
+    text-align: center;
+    width: 100%;
+}
+
+#score_text {
+    margin: 1em auto;
+    text-align: center;
+    width: 6.6em;
+    overflow: hidden;
+}
+
 #time_div {
     display: inline-flex;
     flex-direction: row;
@@ -42,7 +60,6 @@ main {
 #time_text {
     padding-left: 5px;
     text-align: left;
-    color: white;
 }
 
 .jeu {
@@ -111,24 +128,24 @@ button:active {
 }
 
 /*Afficher les boutons à l'écran si la largeur de l'écran est < 1200px (e.g. pour un téléphone ou tablette)*/
-.move_buttons {
+.move-buttons {
     display: none;
 }
 
 @media screen and (max-width: 1200px){
-    .move_buttons {
+    .move-buttons {
         display: inline;
         width: fit-content;
     }
 }
 
-.move_buttons img {
+.move-buttons img {
     height: 4em;
     width: 4em;
     transition: transform .1s;
 }
 
-.move_buttons img:hover {
+.move-buttons img:hover {
     transform: scale(1.1);
 }
 
@@ -138,7 +155,7 @@ menu.html style
 */
 .menu {
     color: white;
-    flex: 1;
+    flex: 1.3;
     width: 20%;
     height: max-content;
     vertical-align: center;
@@ -161,6 +178,9 @@ menu.html style
 
 #main_title {
     margin-bottom: 2em;
+    font-family: P22 Yule W00 Heavy Snow Regular, fantasy;
+    font-style: normal;
+    font-weight: 400;
     font-size: xxx-large;
 }
 

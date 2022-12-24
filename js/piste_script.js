@@ -1,18 +1,22 @@
 const gamegrid = document.getElementById("game_grid");
-const time_text = document.getElementById("time_text")
+const time_text = document.getElementById("time_text");
+const score_text = document.getElementById("score_text");
 
 let pressed_key = "";
 let skier_timeoutID = null;
 let game_timeoutID = null;
 let time_intervalID;
 
-let obstacle_movement_speed;
+let obstacle_movement_speed; //obstacle movement speed that depends on game difficulty
+let score_multiplier; //score multiplier that depends on game difficulty
+let obstacle_movement_speed_multiplier; //obstacle movement speed multiplier that depends on game difficulty
 let time = 0;
 let score = 0;
+let game_status; //0 = finish, 1 = running
 let OBSTACLE_GENERATION_DENSITY; //maximum percentage of obstacles per row
 
-const OBSTACLES_IMG_HEIGHT = 94;
-const GRID_WIDTH = 11;
+const OBSTACLES_IMG_HEIGHT = 94; //height of obstacles to add fixed height rows
+const GRID_WIDTH = 11; //Game constant
 const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT) + 1; //fill the screen height with rows + 1 outside the screen
 
 let skier_pos = Math.floor(GRID_WIDTH / 2);
@@ -23,44 +27,72 @@ generate_grid();
 let skier = generate_skier_character();
 move_obstacles();
 time_intervalID = start_time_counter();
+game_status = 1;
+
+//TODO increasing game speed
+//TODO leaderboard avec JSON
+//TODO add more obstacles variant
+//TODO custom popup
+//TODO mode de jeu infini (actuel) et mode de jeu distance définie
+//TODO ajout de pièces
+//TODO ajout de powerup
+//TODO ajout de sélection de skin
+//TODO ajout de toschuss (qui augmente la vitesse pendant qu'on l'active)
 
 function get_params(){
     const params = new URLSearchParams(window.location.search);
     switch (params.get('difficulty')){
         case "easy":
             obstacle_movement_speed = 1;
+            obstacle_movement_speed_multiplier = 0.01;
+            score_multiplier = 0.5
             OBSTACLE_GENERATION_DENSITY = 20;
             break;
         case "normal":
             obstacle_movement_speed = 2;
-            OBSTACLE_GENERATION_DENSITY = 30;
+            obstacle_movement_speed_multiplier = 0.01;
+            score_multiplier = 1
+            OBSTACLE_GENERATION_DENSITY = 27;
             break;
         case "hard":
             obstacle_movement_speed = 4;
-            OBSTACLE_GENERATION_DENSITY = 35;
+            obstacle_movement_speed_multiplier = 0.005;
+            score_multiplier = 2
+            OBSTACLE_GENERATION_DENSITY = 32;
             break;
         default:
             obstacle_movement_speed = 2;
+            obstacle_movement_speed_multiplier = 0.01;
+            score_multiplier = 1
             OBSTACLE_GENERATION_DENSITY = 30;
     }
 }
 
 function back_to_menu(){
-    window.clearTimeout(game_timeoutID);
-    pause_time_counter(time_intervalID);
-    if (confirm("Voulez-vous vraiment revenir au menu ?")){
+    if (game_status === 1){
+        window.clearTimeout(game_timeoutID);
+        pause_time_counter(time_intervalID);
+        if (confirm("Voulez-vous vraiment revenir au menu ?")){
+            window.location.replace("menu.html");
+        }
+        else {
+            time_intervalID = start_time_counter();
+            move_obstacles();
+        }
+    } else {
         window.location.replace("menu.html");
-    }
-    else {
-        move_obstacles();
-        time_intervalID = start_time_counter();
     }
 }
 
 function start_time_counter(){
     return window.setInterval(function(){
         time++;
+        calc_score();
+        //TODO round à 3 decimal
+        obstacle_movement_speed += obstacle_movement_speed_multiplier;
+        console.log(obstacle_movement_speed);
         time_text.textContent = time.toString();
+        score_text.textContent = score.toString();
     }, 1000);
 }
 
@@ -68,10 +100,13 @@ function pause_time_counter(intervalID){
     window.clearTimeout(intervalID);
 }
 
-function calc_score(){}
+function calc_score(){
+    score += 2 * time * score_multiplier * obstacle_movement_speed;
+}
 
 function defeat(){
     console.log("YOU LOST");
+    game_status = 0;
     window.clearTimeout(game_timeoutID);
     pause_time_counter(time_intervalID);
     window.removeEventListener("keydown", handle_keydown, true);
@@ -242,7 +277,6 @@ function generate_skier_character(){
     skier_img.id = "skier";
     let skier_cell = gamegrid.querySelector("tr").children[skier_pos]
     if (skier_cell.children.length > 0){
-        console.log(skier_cell.firstChild);
         skier_cell.firstChild.style.backgroundImage = "url('../images/skier.png')";
         skier_cell.firstChild.style.backgroundSize = "contain" ;
         skier_cell.firstChild.style.backgroundRepeat = "no-repeat";
