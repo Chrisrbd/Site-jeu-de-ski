@@ -29,7 +29,6 @@ move_obstacles();
 time_intervalID = start_time_counter();
 game_status = 1;
 
-//TODO increasing game speed
 //TODO leaderboard avec JSON
 //TODO add more obstacles variant
 //TODO custom popup
@@ -101,7 +100,7 @@ function pause_time_counter(intervalID){
 }
 
 function calc_score(){
-    score += 2 * time * score_multiplier * obstacle_movement_speed;
+    score += Math.round(time * score_multiplier * obstacle_movement_speed);
 }
 
 function defeat(){
