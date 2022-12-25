@@ -12,14 +12,14 @@ html {
 body {
     margin: 0;
     overflow: hidden; /*changer en hidden en utilisation normale*/
-}
-
-.wrapper {
-    display: flex;
     height: 100%;
     width: 100%;
     background-image: url("../images/background.webp");
     background-size: cover;
+}
+
+.wrapper {
+    display: flex;
 }
 
 main {
@@ -102,8 +102,11 @@ main {
 }
 
 .icon-button {
-    margin-top: 10%;
     transition: transform .2s;
+}
+
+#home_btn {
+    margin-top: 10%;
 }
 
 button {
@@ -158,7 +161,6 @@ menu.html style
     flex: 1.3;
     width: 20%;
     height: max-content;
-    vertical-align: center;
     text-align: center;
 }
 
@@ -177,11 +179,22 @@ menu.html style
 }
 
 #main_title {
-    margin-bottom: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
     font-family: P22 Yule W00 Heavy Snow Regular, fantasy;
     font-style: normal;
     font-weight: 400;
     font-size: xxx-large;
+}
+
+#back_btn_div {
+    display: none;
+    text-align: left;
+    margin: 0 2em;
+}
+
+#back_btn_div .icon {
+    width: 5em;
 }
 
 ul {

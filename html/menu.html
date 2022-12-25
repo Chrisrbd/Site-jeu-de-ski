@@ -6,49 +6,57 @@
         <title>Snow journey</title>
         <link href="../css/styles.css" rel="stylesheet" type="text/css">
     </head>
-    <body class="wrapper">
-        <div class="side_panel">
-            <div>
-                DROITE
-            </div>
-            Texte à gauche
-        </div>
-        <div class="menu">
-            <header id="main_title">
-                <h1>Snow Journey</h1>
-            </header>
-            <main>
-                <div id="main-menu">
-                    <ul>
-                        <li>
-                            <button onclick="show_difficulty_menu()" id="play-button">Jouer</button>
-                        </li>
-                        <!-- button skin skieur-->
-                        <li>
-                            <button onclick="location.href = 'about.html'">Credit</button>
-                        </li>
-                    </ul>
+    <body>
+        <div class="wrapper">
+            <div class="side_panel">
+                <div>
+                    DROITE
                 </div>
-                <div id="difficulty-menu">
-                    <ul>
-                        <li>
-                            <button id="blue_track_btn" onclick="location.href = 'piste.html?difficulty=easy'">Piste bleue 🌀🟦</button>
-                        </li>
-                        <li>
-                            <button id="red_track_btn" onclick="location.href = 'piste.html?difficulty=normal'">Piste rouge ❗🚩</button>
-                        </li>
-                        <li>
-                            <button id="black_track_btn" onclick="location.href = 'piste.html?difficulty=hard'">Piste noire  ☠️🏴</button>
-                        </li>
-                    </ul>
-                </div>
-            </main>
-        </div>
-        <div class="side_panel">
-            <div>
-                Droite
+                Texte à gauche
             </div>
-            Texte à gauche
+            <div class="menu">
+                <header id="main_title">
+                    <h1>Snow Journey</h1>
+                </header>
+                <main>
+                    <div id="main-menu">
+                        <ul>
+                            <li>
+                                <button onclick="show_hide_difficulty_menu()" id="play-button">Jouer</button>
+                            </li>
+                            <!-- button skin skieur-->
+                            <li>
+                                <button onclick="">Paramètres</button>
+                            </li>
+                            <li>
+                                <button onclick="location.href = 'about.html'">Credit</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="difficulty-menu">
+                        <ul>
+                            <li>
+                                <button id="blue_track_btn" onclick="location.href = 'piste.html?difficulty=easy'">Piste bleue 🌀🟦</button>
+                            </li>
+                            <li>
+                                <button id="red_track_btn" onclick="location.href = 'piste.html?difficulty=normal'">Piste rouge ❗🚩</button>
+                            </li>
+                            <li>
+                                <button id="black_track_btn" onclick="location.href = 'piste.html?difficulty=hard'">Piste noire  ☠️🏴</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="back_btn_div">
+                        <input class="icon icon-button" type="image" onclick="back()" src="../images/left_arrow.png" alt="Retour">
+                    </div>
+                </main>
+            </div>
+            <div class="side_panel">
+                <div>
+                    Droite
+                </div>
+                Texte à gauche
+            </div>
         </div>
         <script src="../js/menu_script.js" async></script>
     </body>
