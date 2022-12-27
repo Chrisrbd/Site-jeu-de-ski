@@ -44,6 +44,33 @@ main {
     overflow: hidden;
 }
 
+#score_table {
+    width: 100%;
+    margin-top: 6em;
+    background-color: rgba(70, 70, 70, 0.1);
+}
+
+#score_table td {
+    max-width: 3em;
+    width: fit-content;
+    overflow: hidden;
+}
+
+#score_table tr:first-child {
+    color: yellow;
+    font-size: 1.2em;
+}
+
+#score_table tr:nth-child(2) {
+    color: #4db5da;
+    font-size: 1.15em;
+}
+
+#score_table tr:nth-child(3) {
+    color: #934646;
+    font-size: 1.1em;
+}
+
 #time_div {
     display: inline-flex;
     flex-direction: row;

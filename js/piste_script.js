@@ -1,12 +1,27 @@
 const gamegrid = document.getElementById("game_grid");
 const time_text = document.getElementById("time_text");
 const score_text = document.getElementById("score_text");
+const score_table = document.getElementById("score_table");
+
+// let file_reader = new FileReader();
+// let file = new File([], "test.txt");
+// file_reader.readAsText(file);
+// file_reader.onload = () => {
+//     console.log(file_reader.result);
+// }
+
+// let data = portalData.leaderboard_data;
+// console.log(data);
+// portalData.leaderboard_data.easy = [{"name": "alexis", "score": "186857"}];
+// console.log(data);
+//use localStorage to store data across sessions
 
 let pressed_key = "";
 let skier_timeoutID = null;
 let game_timeoutID = null;
 let time_intervalID;
 
+let game_difficulty;
 let obstacle_movement_speed; //obstacle movement speed that depends on game difficulty
 let score_multiplier; //score multiplier that depends on game difficulty
 let obstacle_movement_speed_multiplier; //obstacle movement speed multiplier that depends on game difficulty
@@ -20,16 +35,16 @@ const GRID_WIDTH = 11; //Game constant
 const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT) + 1; //fill the screen height with rows + 1 outside the screen
 
 let skier_pos = Math.floor(GRID_WIDTH / 2);
+let skier;
+let data;
 
 get_params();
-//Game start
-generate_grid();
-let skier = generate_skier_character();
-move_obstacles();
-time_intervalID = start_time_counter();
-game_status = 1;
+load_json();
 
-//TODO leaderboard avec JSON
+//Game start
+load_game();
+
+//TODO icon de site
 //TODO add more obstacles variant
 //TODO custom popup
 //TODO mode de jeu infini (actuel) et mode de jeu distance définie
@@ -38,32 +53,95 @@ game_status = 1;
 //TODO ajout de sélection de skin
 //TODO ajout de toschuss (qui augmente la vitesse pendant qu'on l'active)
 
+function load_game(){
+    //game generation
+    generate_grid();
+    skier = generate_skier_character();
+    //showing score
+    show_leaderboard();
+
+    //starting game
+    move_obstacles();
+    time_intervalID = start_time_counter();
+    game_status = 1;
+}
+
+// import data from './data.js' assert {type: 'JSON'};
+function load_json(){
+    if (localStorage.getItem("data") === null){
+        console.log("creating data structure in local storage")
+        let s = '{"leaderboard_data": {"easy": [],"normal": [],"hard": []}}';
+        localStorage.setItem("data", s);
+    }
+    data = JSON.parse(localStorage.getItem("data"));
+    console.log(data);
+    // fetch('data.json')
+    //     .then((response) => response.json())
+    //     .then((json) => console.log(json));
+    // console.log("ping");
+    // console.log(data);
+}
+
 function get_params(){
     const params = new URLSearchParams(window.location.search);
     switch (params.get('difficulty')){
         case "easy":
+            game_difficulty = "easy";
             obstacle_movement_speed = 1;
             obstacle_movement_speed_multiplier = 0.01;
             score_multiplier = 0.5
             OBSTACLE_GENERATION_DENSITY = 20;
             break;
         case "normal":
+            game_difficulty = "normal";
             obstacle_movement_speed = 2;
             obstacle_movement_speed_multiplier = 0.01;
             score_multiplier = 1
             OBSTACLE_GENERATION_DENSITY = 27;
             break;
         case "hard":
+            game_difficulty = "hard";
             obstacle_movement_speed = 4;
             obstacle_movement_speed_multiplier = 0.005;
             score_multiplier = 2
             OBSTACLE_GENERATION_DENSITY = 32;
             break;
         default:
+            game_difficulty = "normal"
             obstacle_movement_speed = 2;
             obstacle_movement_speed_multiplier = 0.01;
             score_multiplier = 1
-            OBSTACLE_GENERATION_DENSITY = 30;
+            OBSTACLE_GENERATION_DENSITY = 27;
+    }
+}
+
+// onpagehide = (event) => {
+//     //saving data
+//     localStorage.setItem("data", data.stringify());
+//     alert("data stored in local storage");
+// };
+
+function show_leaderboard(){
+   score_table.replaceChildren();
+    for (let i = 0; i < 10; i++) {
+        if (data['leaderboard_data'][game_difficulty].length > i) {
+            let leaderboard_row = document.createElement("tr");
+            let leaderboard_rank = document.createElement("td");
+            let leaderboard_name = document.createElement("td");
+            let leaderboard_score = document.createElement("td");
+
+            leaderboard_rank.textContent = (i + 1).toString();
+            leaderboard_name.textContent = data['leaderboard_data'][game_difficulty][i]['name'];
+            leaderboard_score.textContent = data['leaderboard_data'][game_difficulty][i]['score'];
+
+            leaderboard_row.appendChild(leaderboard_rank);
+            leaderboard_row.appendChild(leaderboard_name);
+            leaderboard_row.appendChild(leaderboard_score);
+            score_table.appendChild(leaderboard_row);
+        }
+        else {
+            break;
+        }
     }
 }
 
@@ -87,9 +165,8 @@ function start_time_counter(){
     return window.setInterval(function(){
         time++;
         calc_score();
-        //TODO round à 3 decimal
-        obstacle_movement_speed += obstacle_movement_speed_multiplier;
-        console.log(obstacle_movement_speed);
+        //First + is here to easily cast the toFixed() String returned expression to float
+        obstacle_movement_speed = +(obstacle_movement_speed + obstacle_movement_speed_multiplier).toFixed(3);
         time_text.textContent = time.toString();
         score_text.textContent = score.toString();
     }, 1000);
@@ -110,9 +187,51 @@ function defeat(){
     pause_time_counter(time_intervalID);
     window.removeEventListener("keydown", handle_keydown, true);
     window.removeEventListener("keyup", handle_keyup, true);
+
+    check_new_high_score()
 }
 
 function victory(){}
+
+function check_new_high_score(){
+    function username_input(){
+        let input = "";
+        do {
+            input = prompt("Quel-est votre nom ?");
+            if (input === null){
+                input = "Anonyme";
+                break;
+            }
+        } while (input.trim().length > 15 || input.trim().length === 0);
+        return input;
+    }
+
+    for (let i = 0; i < 10; i++) {
+        if (data['leaderboard_data'][game_difficulty].length > i) {
+            if (score > data['leaderboard_data'][game_difficulty][i]['score']){
+                //It's a new high score
+                let new_high_score = {
+                    "name": username_input(),
+                    "score": score
+                }
+                data['leaderboard_data'][game_difficulty].splice(i, 0, new_high_score);
+                localStorage.setItem("data", JSON.stringify(data));
+                show_leaderboard()
+                break;
+            }
+        }
+        else {
+            let new_high_score = {
+                "name": username_input(),
+                "score": score
+            }
+            data['leaderboard_data'][game_difficulty].push(new_high_score);
+            localStorage.setItem("data", JSON.stringify(data));
+            show_leaderboard()
+            break;
+        }
+    }
+}
 
 window.addEventListener("keydown", handle_keydown, true);
 window.addEventListener("keyup", handle_keyup, true);
@@ -214,7 +333,7 @@ function check_collision(){
     let skier_grid_cell = gamegrid.querySelector("tr").children[skier_pos];
     for (const element of skier_grid_cell.children){
         if (element.className === "obstacle_img"){
-            defeat();
+            setTimeout(defeat, 10);
             return 1;
         }
         else if (element.className === "coin_img") {
