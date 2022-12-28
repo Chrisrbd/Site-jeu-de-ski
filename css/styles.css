@@ -38,35 +38,34 @@ main {
 }
 
 #score_text {
-    margin: 1em auto;
+    margin: 1em auto 4em;
     text-align: center;
     width: 6.6em;
     overflow: hidden;
 }
 
-#score_table {
+.score_table {
     width: 100%;
-    margin-top: 6em;
     background-color: rgba(70, 70, 70, 0.1);
 }
 
-#score_table td {
+.score_table td {
     max-width: 3em;
     width: fit-content;
     overflow: hidden;
 }
 
-#score_table tr:first-child {
+.score_table tr:first-child {
     color: yellow;
     font-size: 1.2em;
 }
 
-#score_table tr:nth-child(2) {
+.score_table tr:nth-child(2) {
     color: #4db5da;
     font-size: 1.15em;
 }
 
-#score_table tr:nth-child(3) {
+.score_table tr:nth-child(3) {
     color: #934646;
     font-size: 1.1em;
 }
@@ -237,16 +236,33 @@ li {
     display: none;
 }
 
-/*
-#blue_track_btn {
-    background-color: #4545ff;
+#scoreboard_div {
+    width: 80%;
+    margin: 40% auto auto;
 }
 
-#red_track_btn {
-    background-color: #de3535;
+#scoreboard_div button {
+    width: fit-content;
+    padding: 0.5em 1.5em;
+    background-image: url("../images/button_background.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 1.2em;
+    color: white;
 }
 
-#black_track_btn {
-    background-color: #2a2a2a;
+#blue_score_btn:hover {
+    color: #4545ff;
 }
-*/
+
+#red_score_btn:hover {
+    color: #de3535;
+}
+
+#black_score_btn:hover {
+    color: #2a2a2a;
+}

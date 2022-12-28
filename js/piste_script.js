@@ -1,7 +1,7 @@
 const gamegrid = document.getElementById("game_grid");
 const time_text = document.getElementById("time_text");
 const score_text = document.getElementById("score_text");
-const score_table = document.getElementById("score_table");
+const score_table = document.getElementsByClassName("score_table")[0];
 
 // let file_reader = new FileReader();
 // let file = new File([], "test.txt");
@@ -44,8 +44,7 @@ load_json();
 //Game start
 load_game();
 
-//TODO icon de site
-//TODO add more obstacles variant
+//TODO remplir page de credit
 //TODO custom popup
 //TODO mode de jeu infini (actuel) et mode de jeu distance définie
 //TODO ajout de pièces
@@ -69,7 +68,7 @@ function load_game(){
 // import data from './data.js' assert {type: 'JSON'};
 function load_json(){
     if (localStorage.getItem("data") === null){
-        console.log("creating data structure in local storage")
+        console.log("creating data structure in local storage");
         let s = '{"leaderboard_data": {"easy": [],"normal": [],"hard": []}}';
         localStorage.setItem("data", s);
     }
@@ -357,7 +356,7 @@ function generate_obstacle_row(row){
     //place an obstacle to the computed positions
     for (const pos of obstacle_positions) {
         let obstacle = document.createElement("img");
-        obstacle.src = "../images/clashofclans_sapin_2018_resized(10x8).png";
+        obstacle.src = get_random_obstacle();
         obstacle.className = "obstacle_img";
         row.children[pos].appendChild(obstacle);
     }
@@ -372,8 +371,8 @@ function generate_row(){
     }
     let left_decoration_obstacle = document.createElement("img");
     let right_decoration_obstacle = document.createElement("img");
-    left_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10x8).png";
-    right_decoration_obstacle.src = "../images/clashofclans_sapin_2018_resized(10x8).png";
+    left_decoration_obstacle.src = get_random_obstacle();
+    right_decoration_obstacle.src = get_random_obstacle();
     left_decoration_obstacle.className = "obstacle_img";
     right_decoration_obstacle.className = "obstacle_img";
     row.firstChild.appendChild(left_decoration_obstacle);
@@ -405,4 +404,19 @@ function generate_skier_character(){
     }
     // skier_cell.insertAdjacentElement("afterbegin", skier_img);
     return skier_img;
+}
+
+function get_random_obstacle(){
+    switch (Math.round(Math.random() * 4) + 1){
+        case 1:
+            return "../images/clashofclans_sapin_2018_resized(10x8).png";
+        case 2:
+            return "../images/clashofclans_sapin_2020_resized(10x8).png";
+        case 3:
+            return "../images/clashofclans_sapin_2021_resized(10x8).png";
+        case 4:
+            return "../images/clashofclans_sapin_2022_resized(10x8).png";
+        default:
+            return "../images/clashofclans_sapin_2022_resized(10x8).png";
+    }
 }

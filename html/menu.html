@@ -5,14 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Snow journey</title>
         <link href="../css/styles.css" rel="stylesheet" type="text/css">
+        <link href="../images/skier.png" rel="icon">
     </head>
     <body>
         <div class="wrapper">
             <div class="side_panel">
-                <div>
-                    DROITE
+                <div id="scoreboard_div">
+                    <h1>Meilleurs score</h1>
+                    <div>
+                        <button name="blue_score_btn" id="blue_score_btn" onclick="select_scoreboard('easy')">Bleue</button>
+                        <button name="red_score_btn" id="red_score_btn" onclick="select_scoreboard('normal')">Rouge</button>
+                        <button name="black_score_btn" id="black_score_btn" onclick="select_scoreboard('hard')">Noire</button>
+                    </div>
+                    <table class="score_table" id="easy_scoreboard">
+                    </table>
+                    <table class="score_table" id="normal_scoreboard">
+                    </table>
+                    <table class="score_table" id="hard_scoreboard">
+                    </table>
                 </div>
-                Texte à gauche
             </div>
             <div class="menu">
                 <header id="main_title">
@@ -24,7 +35,6 @@
                             <li>
                                 <button onclick="show_hide_difficulty_menu()" id="play-button">Jouer</button>
                             </li>
-                            <!-- button skin skieur-->
                             <li>
                                 <button onclick="">Paramètres</button>
                             </li>
@@ -53,9 +63,8 @@
             </div>
             <div class="side_panel">
                 <div>
-                    Droite
+                    Skin customisation
                 </div>
-                Texte à gauche
             </div>
         </div>
         <script src="../js/menu_script.js" async></script>
