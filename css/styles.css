@@ -204,6 +204,10 @@ menu.html style
     font-size: 1.2em;
 }
 
+.menu main {
+    margin-top: 20%;
+}
+
 #main_title {
     margin-top: 0;
     margin-bottom: 0;
@@ -265,4 +269,23 @@ li {
 
 #black_score_btn:hover {
     color: #2a2a2a;
+}
+
+#skin_selection_div {
+    margin-top: 40%;
+}
+
+#skin_selection_div div {
+    display: flex;
+    padding: 0 15%;
+}
+
+#skin_selection_div .icon {
+    flex: 1;
+    margin: auto;
+    height: fit-content;
+}
+
+#skier_skin_viewer {
+    flex: 5;
 }

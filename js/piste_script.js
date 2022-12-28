@@ -34,6 +34,7 @@ const OBSTACLES_IMG_HEIGHT = 94; //height of obstacles to add fixed height rows
 const GRID_WIDTH = 11; //Game constant
 const GRID_LENGTH = Math.ceil(window.innerHeight / OBSTACLES_IMG_HEIGHT) + 1; //fill the screen height with rows + 1 outside the screen
 
+let skier_skin = localStorage.getItem("selected_skin");
 let skier_pos = Math.floor(GRID_WIDTH / 2);
 let skier;
 let data;
@@ -269,14 +270,14 @@ function handle_keyup(event){
     pressed_key = "";
     skier_timeoutID = this.setTimeout(function(){
         if ((event.key === "ArrowRight" || event.key === "ArrowLeft") && pressed_key === ""){
-            skier.src = "../images/skier.png";
+            skier.src = get_skier_skin_path();
         }
     }, 200)
 }
 
 function move_right(){
     if (skier_pos + 1 < GRID_WIDTH - 1){
-        skier.src = "../images/skier_right.png";
+        skier.src = get_skier_skin_path("right");
         move_skier_character(skier_pos + 1);
         skier_pos++;
         check_collision();
@@ -285,7 +286,7 @@ function move_right(){
 
 function move_left(){
     if (skier_pos - 1 > 0){
-        skier.src = "../images/skier_left.png";
+        skier.src = get_skier_skin_path("left");
         move_skier_character(skier_pos - 1);
         skier_pos--;
         check_collision();
@@ -299,12 +300,12 @@ function move_skier_character(position){
         row[position].firstChild.style.backgroundRepeat = "no-repeat";
         if (position > skier_pos){
             //to the right
-            row[position].firstChild.style.backgroundImage = "url('../images/skier_right.png')";
+            row[position].firstChild.style.backgroundImage = "url(" + get_skier_skin_path("right") + ")";
             row[position].firstChild.style.backgroundPosition = "left";
         }
         else {
             //to the left
-            row[position].firstChild.style.backgroundImage = "url('../images/skier_left.png')";
+            row[position].firstChild.style.backgroundImage = "url(" + get_skier_skin_path("left") + ")";
             row[position].firstChild.style.backgroundPosition = "right";
         }
         row[skier_pos].removeChild(skier);
@@ -390,11 +391,11 @@ function generate_grid(){
 
 function generate_skier_character(){
     let skier_img = document.createElement("img");
-    skier_img.src = "../images/skier.png";
+    skier_img.src = get_skier_skin_path();
     skier_img.id = "skier";
     let skier_cell = gamegrid.querySelector("tr").children[skier_pos]
     if (skier_cell.children.length > 0){
-        skier_cell.firstChild.style.backgroundImage = "url('../images/skier.png')";
+        skier_cell.firstChild.style.backgroundImage = "url(" + get_skier_skin_path() + ")";
         skier_cell.firstChild.style.backgroundSize = "contain" ;
         skier_cell.firstChild.style.backgroundRepeat = "no-repeat";
         skier_cell.firstChild.style.backgroundPosition = "center";
@@ -404,6 +405,17 @@ function generate_skier_character(){
     }
     // skier_cell.insertAdjacentElement("afterbegin", skier_img);
     return skier_img;
+}
+
+function get_skier_skin_path(orientation){
+    switch (orientation) {
+        case "left":
+            return "../images/" + skier_skin + "_left.png";
+        case "right":
+            return "../images/" + skier_skin + "_right.png";
+        default:
+            return "../images/" + skier_skin + ".png";
+    }
 }
 
 function get_random_obstacle(){

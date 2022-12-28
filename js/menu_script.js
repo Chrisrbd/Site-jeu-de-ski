@@ -7,7 +7,15 @@ let hard_scoreboard = document.getElementById("hard_scoreboard");
 let easy_scoreboard_btn = document.getElementsByName("blue_score_btn")[0];
 let normal_scoreboard_btn = document.getElementsByName("red_score_btn")[0];
 let hard_scoreboard_btn = document.getElementsByName("black_score_btn")[0];
+let skin_viewer_img = document.getElementById("skier_skin_viewer");
 
+if (localStorage.getItem("selected_skin") === null) {
+    localStorage.setItem("selected_skin", "skier");
+}
+
+const SKIN_LIST = ["skier", "skier2", "skier3", "skier4"];
+let skin_index = SKIN_LIST.indexOf(localStorage.getItem("selected_skin"));
+skin_viewer_img.src = "../images/" + localStorage.getItem("selected_skin") + ".png";
 let active_menu = "main";
 let selected_scoreboard = "";
 let data;
@@ -79,6 +87,28 @@ function select_scoreboard(difficulty) {
             }
             break;
     }
+}
+
+function select_previous_skin() {
+    if (skin_index === 0) {
+        skin_index = SKIN_LIST.length - 1;
+    }
+    else {
+        skin_index -= 1;
+    }
+    localStorage.setItem("selected_skin", SKIN_LIST[skin_index]);
+    skin_viewer_img.src = "../images/" + localStorage.getItem("selected_skin") + ".png";
+}
+
+function select_next_skin() {
+    if (skin_index === SKIN_LIST.length - 1) {
+        skin_index = 0;
+    }
+    else {
+        skin_index += 1;
+    }
+    localStorage.setItem("selected_skin", SKIN_LIST[skin_index]);
+    skin_viewer_img.src = "../images/" + localStorage.getItem("selected_skin") + ".png";
 }
 
 function back() {
