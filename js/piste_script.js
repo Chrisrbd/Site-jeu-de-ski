@@ -2,6 +2,8 @@ const gamegrid = document.getElementById("game_grid");
 const time_text = document.getElementById("time_text");
 const score_text = document.getElementById("score_text");
 const score_table = document.getElementsByClassName("score_table")[0];
+const popup_score_text = document.getElementById("popup-score-text");
+const popup_box = document.getElementsByClassName("pop-up-box")[0];
 
 // let file_reader = new FileReader();
 // let file = new File([], "test.txt");
@@ -145,6 +147,12 @@ function show_leaderboard(){
     }
 }
 
+function show_defeat_popup(){
+    popup_box.style.display="block";
+    popup_score_text.textContent = score;
+}
+
+
 function back_to_menu(){
     if (game_status === 1){
         window.clearTimeout(game_timeoutID);
@@ -187,8 +195,8 @@ function defeat(){
     pause_time_counter(time_intervalID);
     window.removeEventListener("keydown", handle_keydown, true);
     window.removeEventListener("keyup", handle_keyup, true);
-
-    check_new_high_score()
+    show_defeat_popup();
+    check_new_high_score();
 }
 
 function victory(){}
@@ -431,4 +439,6 @@ function get_random_obstacle(){
         default:
             return "../images/clashofclans_sapin_2022_resized(10x8).png";
     }
+
+    getElement
 }
